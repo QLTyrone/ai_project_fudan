@@ -1,0 +1,19 @@
+CNN:
+  Train:
+    batch_size: 30
+    epochs: 100
+    lr: 0.001
+    train_path: "dataPath/train_data.txt"
+    is_load: False
+    load_path: "model/CNNModel.pth"
+    save_path: "model/CNNModel.pth"
+
+  Val:  
+    val_path: "dataPath/val_data.txt"
+
+  General:
+    class_num: 12
+
+  Test: 
+    test_path: "dataPath/test_data.txt"
+    load_path: "model/CNNModel.pth"
