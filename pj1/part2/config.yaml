@@ -1,6 +1,6 @@
 CNN:
   Train:
-    batch_size: 30
+    batch_size: 200
     epochs: 100
     lr: 0.001
     train_path: "dataPath/train_data.txt"

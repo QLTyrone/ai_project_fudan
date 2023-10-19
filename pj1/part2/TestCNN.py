@@ -1,8 +1,3 @@
-r""" This file is to train and eval the classify-model """
-r"""博1bo  学2xue  笃3du  志4zhi,
-    切5qie 问6wen  近7jin 思8si, 
-    自9zi  由10you 无11wu 用12yong """
-
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
@@ -23,7 +18,7 @@ config = yaml.load(open(config_path, 'r'), Loader=yaml.Loader)
 config = EasyDict(config)
 config = config["CNN"]
 
-test_path = config["Test"]["annotation_path"]
+test_path = config["Test"]["test_path"]
 class_num = config["General"]["class_num"]
 batch_size = config["Train"]["batch_size"]
 load_path = config["Test"]["load_path"]

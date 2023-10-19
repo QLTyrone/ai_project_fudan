@@ -1,0 +1,34 @@
+Regression:
+  Train:
+    batch_size: 20
+    epochs: 1000
+    net_arch: [1,32,64,64,1]
+    lr: 0.01
+    data_size: 8000
+    init_generation_random_range: 0.15
+
+  Val:  
+    data_size: 500
+
+
+Classifier:
+  Train:
+    batch_size: 20
+    epochs: 30
+    net_arch: [784,128,64,12]
+    lr: 0.01
+    init_generation_random_range: 0.15
+    train_path: "dataPath/train_data.txt"
+    is_load: False
+    load_path: "model/classify"
+    save_path: "model/classify"
+
+  Val:  
+    val_path: "dataPath/val_data.txt"
+
+  Test:
+    test_path: "dataPath/test_data.txt"
+    load_path: "model/classify"
+
+  General:
+    class_num: 12
