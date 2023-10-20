@@ -8,6 +8,7 @@ import yaml
 from easydict import EasyDict
 
 
+# load config
 parser = argparse.ArgumentParser(description='Classifier Task')
 parser.add_argument("--config_path", type=str, default="config.yaml")
 args = parser.parse_args()
@@ -50,9 +51,9 @@ def eval(model):
 
     acc_rate = acc_num / len(eval_dataset)
     avg_loss = total_loss / len(eval_dataset)
-    print("eval_accuracy, %.2f total loss in %d data size" 
-          % (total_loss, len(eval_dataset)))
-    print("Avg_loss is %.2f, with acc_rate %.2f%% \n" % (avg_loss, (acc_rate*100)))
+    # print("eval_accuracy, %.2f total loss in %d data size" 
+    #       % (total_loss, len(eval_dataset)))
+    print("Avg_loss is %.2f, and acc_rate is %.2f%% \n" % (avg_loss, (acc_rate*100)))
     return avg_loss, acc_rate
 
 
@@ -88,10 +89,10 @@ if __name__ == "__main__":
                 img, label = img_tensor[j], label_tensor[j]
                 img = img.numpy()
                 pred = net.forward(img)
-                gt_one_hot = [0]*class_num
-                gt_one_hot[label-1] = 1
-                gt_one_hot = np.array(gt_one_hot).reshape((class_num,1))
-                loss = pred - gt_one_hot
+                onehot_label = [0]*class_num
+                onehot_label[label-1] = 1
+                onehot_label = np.array(onehot_label).reshape((class_num,1))
+                loss = pred - onehot_label
                 net.backward(loss)
             net.update_weight(net.lr)
         

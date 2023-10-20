@@ -1,7 +1,7 @@
 Regression:
   Train:
     batch_size: 20
-    epochs: 1000
+    epochs: 3000
     net_arch: [1,32,64,64,1]
     lr: 0.01
     data_size: 8000
@@ -14,7 +14,7 @@ Regression:
 Classifier:
   Train:
     batch_size: 20
-    epochs: 30
+    epochs: 100
     net_arch: [784,128,64,12]
     lr: 0.01
     init_generation_random_range: 0.15

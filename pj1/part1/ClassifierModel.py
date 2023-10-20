@@ -31,10 +31,10 @@ class ClassifierNet(object):
         if is_load:
             self.load_network()
     
-    def forward(self, raw_input):
+    def forward(self, input):
         for layer in self.layers:
-            raw_input = layer.forward(raw_input)
-        return raw_input
+            input = layer.forward(input)
+        return input
     
     def backward(self, loss):
         for layer in reversed(self.layers):

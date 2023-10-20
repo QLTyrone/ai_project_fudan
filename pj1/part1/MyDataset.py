@@ -9,10 +9,10 @@ class MyDataset(Dataset):
         self.img_paths = []
         self.img_labels = []
         with open(annotation_path, "r") as f:
-            annotations = f.readlines()
-        self.sample_num = len(annotations)
+            paths = f.readlines()
+        self.sample_num = len(paths)
 
-        for annotation in annotations:
+        for annotation in paths:
             splited_string = annotation.strip(" ").split(" ")
             img_path = splited_string[0]
             img_label = int(splited_string[1])
@@ -22,10 +22,9 @@ class MyDataset(Dataset):
 
     def __getitem__(self, index):
         img = Image.open(self.img_paths[index]).convert('L')
-        trans = transforms.ToTensor()
-        img = trans(img).numpy().reshape((28*28,1)) 
-        # push it into one dimension
-        # And later I need make it more flexible
+        t = transforms.ToTensor()
+        # flatten img into one dim
+        img = t(img).numpy().reshape((28*28,1)) 
         label = self.img_labels[index]
         return img, label
     

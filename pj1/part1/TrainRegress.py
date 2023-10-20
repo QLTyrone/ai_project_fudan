@@ -7,7 +7,7 @@ import argparse
 import yaml
 from easydict import EasyDict
 
-
+# load config
 parser = argparse.ArgumentParser(description='Regression Task')
 parser.add_argument("--config_path", type=str, default="config.yaml")
 args = parser.parse_args()
@@ -25,34 +25,23 @@ lr = config["Train"]["lr"]
 random_range = config["Train"]["init_generation_random_range"]
 
 
-def eval(model, eval_data_size=500, if_draw=False):
-    model.eval_data = []
+def eval(model, eval_data_size=500):
+    x_list = []
     for i in range(0, eval_data_size):
-        model.eval_data.append(random.uniform(-math.pi, math.pi))
-    model.eval_data.sort()
+        x_list.append(random.uniform(-math.pi, math.pi))
+    x_list.sort()
 
     total_loss = 0
-    eval_results = []
+    pred_list = []
     for i in range(0, eval_data_size):
-        pred = model.forward(np.array([[model.eval_data[i]]]))
-        eval_results.append(pred[0][0])
-        total_loss += abs(np.sin(model.eval_data[i])- pred[0][0])
+        pred = model.forward(np.array([[x_list[i]]]))
+        pred_list.append(pred[0][0])
+        total_loss += abs(np.sin(x_list[i])- pred[0][0])
     avg_loss = total_loss / eval_data_size
     # print(eval_data_size)
-    print("eval accuracy, %f total loss in %d data size" 
-          % (total_loss, eval_data_size))
+    # print("eval accuracy, %f total loss in %d data size" 
+    #       % (total_loss, eval_data_size))
     print("Avg_loss: ", avg_loss, '\n')
-
-    if if_draw:
-        plt.plot(model.eval_data, np.sin(model.eval_data),
-                 color="red", label="Real Sin")
-        plt.plot(model.eval_data, eval_results, 
-                 color="green", label="My Regression")
-        plt.xlim(-math.pi, math.pi)
-        plt.ylim(-1, 1)
-        plt.title("With Loss: " + str(avg_loss))
-        plt.legend()
-        plt.show()
 
     return avg_loss
 
@@ -67,7 +56,7 @@ if __name__ == "__main__":
     epoch_record_x = []
     avg_loss_record_y = []
     epoch_record_x.append(0)
-    avg_loss_record_y.append(eval(net, eval_data_size=eval_data_size, if_draw=False))
+    avg_loss_record_y.append(eval(net, eval_data_size=eval_data_size))
 
     for epoch in range(0, epochs+1):
 
@@ -82,13 +71,11 @@ if __name__ == "__main__":
             if batch_num == net.batch_size:
                 batch_num = 0
                 net.update_weight(net.lr) 
-                # it seems that we can make lr/=2
         
         if epoch % 50 == 0:
             print("Epoch" , epoch)
-            if_draw = False
             epoch_record_x.append(epoch)
-            avg_loss_record_y.append(eval(net, eval_data_size=eval_data_size, if_draw=if_draw))
+            avg_loss_record_y.append(eval(net, eval_data_size=eval_data_size))
     
     net.save_network()
 

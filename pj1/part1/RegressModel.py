@@ -12,8 +12,7 @@ class RegressionNet(object):
         self.lr = lr
         self.random_range = random_range
         self.train_data_size = train_data_size
-        self.train_data = np.linspace(-math.pi, math.pi, train_data_size) # generate data
-        self.eval_data = []
+        self.train_data = np.linspace(-math.pi, math.pi, train_data_size)
         self.batch_size = batch_size
         self.task_kind = task_kind
 
