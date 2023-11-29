@@ -62,28 +62,28 @@ class HMMModel():
     def __init__(self, word_dict, tag_dict, train_words, train_tags):
         self.word_dict = word_dict
         self.tag_dict = tag_dict
-        self.tot_words = train_words
-        self.tot_tags = train_tags
+        self.words = train_words
+        self.tags = train_tags
         
         self.trans = np.zeros((len(tag_dict), len(tag_dict)))
         self.emits = np.zeros((len(tag_dict), len(word_dict)))
-        self.piinit = np.zeros(len(tag_dict))
+        self.inits = np.zeros(len(tag_dict))
 
-        for i, tags in enumerate(self.tot_tags):
+        for i, tags in enumerate(self.tags):
             for j, tag in enumerate(tags):
-                obser_word = self.tot_words[i][j]
-                self.emits[tag_dict[tag]][word_dict[obser_word]] += 1
+                w = self.words[i][j]
+                self.emits[tag_dict[tag]][word_dict[w]] += 1
                 if j==0:
-                    self.piinit[tag_dict[tag]] += 1
+                    self.inits[tag_dict[tag]] += 1
                 if j==len(tags)-1:
                     pass
                 else :
                     next_tag = tags[j+1]
                     self.trans[tag_dict[tag]][tag_dict[next_tag]] += 1
 
-        self.piinit = self.piinit / self.piinit.sum()
-        self.piinit[self.piinit==0] = 1e-8
-        self.piinit = np.log10(self.piinit)
+        self.inits = self.inits / self.inits.sum()
+        self.inits[self.init==0] = 1e-8
+        self.inits = np.log10(self.inits)
 
         for i in range(0, len(self.trans)):
             sum = self.trans[i].sum()
@@ -107,18 +107,18 @@ class HMMModel():
         f = open(out_path, "w", encoding="utf-8")
         for i, words in enumerate(val_words):
             prob = np.zeros((len(words), len(self.tag_dict)))
-            arg_max_p = np.zeros((len(words), len(self.tag_dict)))
+            max_prob_pos = np.zeros((len(words), len(self.tag_dict)))
             states = np.zeros(len(words))    
-            prob[0] = self.piinit + self.emits[:, self.word_dict[words[0]]]
+            prob[0] = self.inits + self.emits[:, self.word_dict[words[0]]]
             for j in range(1, len(words)):
-                max_p = prob[j-1] + self.trans.T
-                arg_max_p[j] = np.argmax(max_p, axis=1)
-                prob[j] = [max_p[k, int(arg_max_p[j][k])] for k in range(max_p.shape[0])]
+                max_prob = prob[j-1] + self.trans.T
+                max_prob_pos[j] = np.argmax(max_prob, axis=1)
+                prob[j] = [max_prob[k, int(max_prob_pos[j][k])] for k in range(max_prob.shape[0])]
                 prob[j] = prob[j] + self.emits[:, self.word_dict[words[j]]]
             
             states[-1] = np.argmax(prob[-1])
             for j in reversed(range(0, len(prob)-1)):
-                states[j] = arg_max_p[j+1][int(states[j+1])]
+                states[j] = max_prob_pos[j+1][int(states[j+1])]
             rev_tag_dict = list(self.tag_dict.keys())
             for j in range(len(states)):
                 f.write(words[j] + " " + rev_tag_dict[int(states[j])] + "\n")
