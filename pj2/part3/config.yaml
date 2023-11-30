@@ -1,13 +1,13 @@
 BiLSTM_CRF:
   Train:
     En:
-      train_path: "../NER/English/train.txt"
+      train_path: "../dataset/NER/English/train.txt"
       tag_dict: {"O": 0, "B-PER": 1, "I-PER": 2, "B-ORG": 3, 
       "I-ORG": 4, "B-LOC": 5, "I-LOC": 6, "B-MISC": 7, "I-MISC": 8,
       "<s>": 9, "</s>": 10}
       embedding_size: 11
     Cn:
-      train_path: "../NER/Chinese/train.txt"
+      train_path: "../dataset/NER/Chinese/train.txt"
       tag_dict: {'O': 0, 'B-NAME': 1, 'M-NAME': 2, 'E-NAME': 3, 
       'S-NAME': 4, 'B-CONT': 5, 'M-CONT': 6, 'E-CONT': 7, 'S-CONT': 8,
       'B-EDU': 9, 'M-EDU': 10, 'E-EDU': 11, 'S-EDU': 12, 'B-TITLE': 13, 
@@ -19,11 +19,11 @@ BiLSTM_CRF:
       embedding_size: 35
   Val:  
     En:
-      val_path: "../NER/English/validation.txt"
-      out_path: "../NER/English/ans.txt"
+      val_path: "../dataset/NER/English/validation.txt"
+      out_path: "../dataset/NER/English/ans.txt"
     Cn:
-      val_path: "../NER/Chinese/validation.txt"
-      out_path: "../NER/Chinese/ans.txt"
+      val_path: "../dataset/NER/Chinese/validation.txt"
+      out_path: "../dataset/NER/Chinese/ans.txt"
 
   General:
     hidden_dim: 768
@@ -35,8 +35,8 @@ BiLSTM_CRF:
 
   Test: # -->
     En:
-      test_path: "../NER/english_test.txt"
-      load_path: "./model_store/BiLSTM_CRF_EN1.pth"
+      test_path: "../dataset/NER/english_test.txt"
+      load_path: "./model_store/BiLSTM_CRF01_en.pth"
     Cn:
-      test_path: "../NER/chinese_test.txt"
-      load_path: "./model_store/BiLSTM_CRF_CN1.pth"
+      test_path: "../dataset/NER/chinese_test.txt"
+      load_path: "./model_store/BiLSTM_CRF01_cn.pth"

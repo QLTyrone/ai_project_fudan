@@ -19,11 +19,10 @@ config_path =args.config_path
 config = yaml.load(open(config_path, 'r'), Loader=yaml.Loader)
 config = EasyDict(config)
 config = config["BiLSTM_CRF"]
-kind = "Cn" #### 
-# kind = "En" #### 
+kind = "Cn"
+# kind = "En" 
 train_path = config["Train"][kind]["train_path"]
 val_path = config["Val"][kind]["val_path"]
-out_path = config["Val"][kind]["out_path"]
 batch_size = config["General"]["batch_size"]
 epochs = config["General"]["epochs"]
 embedding_size = config["Train"][kind]["embedding_size"]
@@ -31,7 +30,6 @@ hidden_dim = config["General"]["hidden_dim"]
 is_load = config["General"]["is_load"]
 load_path = config["General"]["load_path"]
 save_path = config["General"]["save_path"]
-
 
 def GetDict(path_lists):
     word_dict = OrderedDict()
@@ -48,7 +46,6 @@ def GetDict(path_lists):
             if word not in word_dict:
                 word_dict[word] = len(word_dict)
     return word_dict
-
 
 def eval(model, word_dict, tag_dict):
     model.eval()

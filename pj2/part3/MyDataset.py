@@ -2,30 +2,28 @@ import os
 import torch
 from torch.utils.data import Dataset
 
-
 def GetData(path):
-    tot_raw_words = [] 
-    tot_raw_tags = []
-    raw_words = []
-    raw_tags = []
+    word_sentence_in_dataset = [] 
+    tag_sentence_in_dataset = []
+    word_in_sentence = []
+    tag_in_sentence = []
     with open(path, "r", encoding="utf-8") as f:
         annotations = f.readlines()
     for annotation in annotations:
-        splited_string = annotation.strip(" ").strip("\n").split(" ")
-        if len(splited_string)<=1:
-            tot_raw_words.append(raw_words)
-            tot_raw_tags.append(raw_tags)
-            raw_tags = []
-            raw_words = []
+        word_and_tag = annotation.strip(" ").strip("\n").split(" ")
+        if len(word_and_tag)<=1:
+            word_sentence_in_dataset.append(word_in_sentence)
+            tag_sentence_in_dataset.append(tag_in_sentence)
+            tag_in_sentence = []
+            word_in_sentence = []
             continue
-        word = splited_string[0]
-        tag = splited_string[1]
-        raw_words.append(word)
-        raw_tags.append(tag)
-    tot_raw_words.append(raw_words)
-    tot_raw_tags.append(raw_tags)
-    return tot_raw_words, tot_raw_tags
-
+        word = word_and_tag[0]
+        tag = word_and_tag[1]
+        word_in_sentence.append(word)
+        tag_in_sentence.append(tag)
+    word_sentence_in_dataset.append(word_in_sentence)
+    tag_sentence_in_dataset.append(tag_in_sentence)
+    return word_sentence_in_dataset, tag_sentence_in_dataset
 
 class MyDataset(Dataset):
     def __init__(self, path, word_dict, tag_dict):
