@@ -1,0 +1,42 @@
+BiLSTM_CRF:
+  Train:
+    En:
+      train_path: "../NER/English/train.txt"
+      tag_dict: {"O": 0, "B-PER": 1, "I-PER": 2, "B-ORG": 3, 
+      "I-ORG": 4, "B-LOC": 5, "I-LOC": 6, "B-MISC": 7, "I-MISC": 8,
+      "<s>": 9, "</s>": 10}
+      embedding_size: 11
+    Cn:
+      train_path: "../NER/Chinese/train.txt"
+      tag_dict: {'O': 0, 'B-NAME': 1, 'M-NAME': 2, 'E-NAME': 3, 
+      'S-NAME': 4, 'B-CONT': 5, 'M-CONT': 6, 'E-CONT': 7, 'S-CONT': 8,
+      'B-EDU': 9, 'M-EDU': 10, 'E-EDU': 11, 'S-EDU': 12, 'B-TITLE': 13, 
+      'M-TITLE': 14, 'E-TITLE': 15, 'S-TITLE': 16, 'B-ORG': 17, 
+      'M-ORG': 18, 'E-ORG': 19, 'S-ORG': 20, 'B-RACE': 21, 'M-RACE': 22, 
+      'E-RACE': 23, 'S-RACE': 24, 'B-PRO': 25, 'M-PRO': 26, 'E-PRO': 27, 
+      'S-PRO': 28, 'B-LOC': 29, 'M-LOC': 30, 'E-LOC': 31, 'S-LOC': 32,
+      "<s>": 33, "</s>": 34}
+      embedding_size: 35
+  Val:  
+    En:
+      val_path: "../NER/English/validation.txt"
+      out_path: "../NER/English/ans.txt"
+    Cn:
+      val_path: "../NER/Chinese/validation.txt"
+      out_path: "../NER/Chinese/ans.txt"
+
+  General:
+    hidden_dim: 768
+    epochs: 50
+    batch_size: 32
+    is_load: False
+    load_path: "./model_store/BiLSTM_CRF01.pth"
+    save_path: "./model_store/BiLSTM_CRF01.pth"
+
+  Test: # -->
+    En:
+      test_path: "../NER/english_test.txt"
+      load_path: "./model_store/BiLSTM_CRF_EN1.pth"
+    Cn:
+      test_path: "../NER/chinese_test.txt"
+      load_path: "./model_store/BiLSTM_CRF_CN1.pth"

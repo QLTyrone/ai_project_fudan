@@ -41,5 +41,5 @@ def check(language, gold_path, my_path):
     return
 
 if __name__ == "__main__":
-    # check(language = "English", gold_path="pj2/dataset/NER/English/validation.txt", my_path="pj2/dataset/NER/English/ans.txt")
-    check(language = "Chinese", gold_path="pj2/dataset/NER/Chinese/validation.txt", my_path="pj2/dataset/NER/Chinese/ans.txt")
+    check(language = "English", gold_path="English/validation.txt", my_path="English/ans.txt")
+    # check(language = "Chinese", gold_path="Chinese/validation.txt", my_path="Chinese/ans.txt")

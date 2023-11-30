@@ -4,7 +4,6 @@ import yaml
 from easydict import EasyDict
 from collections import OrderedDict
 
-
 parser = argparse.ArgumentParser(description='HMM')
 parser.add_argument("--config_path", type=str, default="config.yaml")
 args = parser.parse_args()
@@ -17,7 +16,6 @@ kind = "Cn"
 train_path = config["Train"][kind]["train_path"]
 val_path = config["Val"][kind]["val_path"]
 out_path = config["Val"][kind]["out_path"]
-
 
 def GetDict(path_lists):
     word_dict = OrderedDict()
@@ -32,7 +30,6 @@ def GetDict(path_lists):
             if word not in word_dict:
                 word_dict[word] = len(word_dict)
     return word_dict
-
 
 def GetData(path):
     word_sentence_in_dataset = [] 
@@ -56,7 +53,6 @@ def GetData(path):
     word_sentence_in_dataset.append(word_in_sentence)
     tag_sentence_in_dataset.append(tag_in_sentence)
     return word_sentence_in_dataset, tag_sentence_in_dataset
-
 
 class HMMModel():
     def __init__(self, word_dict, tag_dict, train_words, train_tags):
@@ -126,7 +122,6 @@ class HMMModel():
                 f.write("\n")
 
         f.close()
-
 
 
 if __name__ == "__main__":
